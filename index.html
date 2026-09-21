@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="ko" data-theme="system">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ScamScent — 사기 위험 신호 분석기</title>
+  <meta name="description" content="문자, 이메일, URL을 붙여넣으면 결제 재촉, 개인정보 요구, 단축 URL, 의심스러운 도메인 등 사기 위험 신호를 브라우저에서 분석합니다." />
+  <meta name="theme-color" content="#6D5EF7" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="__SITE_URL__/" id="canonical-link" />
+
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="./favicon-32x32.png" sizes="32x32" type="image/png" />
+  <link rel="icon" href="./favicon-16x16.png" sizes="16x16" type="image/png" />
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png" sizes="180x180" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+
+  <meta property="og:title" content="ScamScent — 사기 위험 신호 분석기" />
+  <meta property="og:description" content="붙여넣기만 하면 위험 신호와 이유, 다음 행동을 빠르게 확인하세요." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="__SITE_URL__/" />
+  <meta property="og:image" content="__SITE_URL__/og-image.png" />
+  <meta property="og:site_name" content="ScamScent" />
+  <meta property="og:locale" content="ko_KR" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ScamScent — 사기 위험 신호 분석기" />
+  <meta name="twitter:description" content="문자, 이메일, URL에 숨어 있는 위험 신호를 브라우저에서 분석합니다." />
+  <meta name="twitter:image" content="__SITE_URL__/og-image.png" />
+
+  <link rel="stylesheet" href="./src/styles.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "ScamScent",
+    "applicationCategory": "SecurityApplication",
+    "operatingSystem": "Any",
+    "description": "문자, 이메일, URL의 사기 위험 신호를 브라우저에서 분석하는 웹 애플리케이션",
+    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "KRW"}
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#scanner">검사기로 바로 이동</a>
+
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="ScamScent 홈">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" role="img"><path d="M7 20c0-7 7-12 15-10-4 2-6 5-5 8 1 4-2 8-6 8-2 0-4-1-4-6Z" fill="currentColor"/><path d="M20 7c2-3 5-4 8-3M23 11c2-2 4-2 6-1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </span>
+        <span>ScamScent</span>
+      </a>
+
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="#scanner">검사하기</a>
+        <a href="#intel">조사 DB</a>
+        <a href="#how-it-works">작동 원리</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-button" id="theme-toggle" type="button" aria-label="테마 변경" title="테마 변경">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="icon-button mobile-menu-button" id="mobile-menu-button" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobile-menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+    <nav id="mobile-menu" class="mobile-menu" aria-label="모바일 메뉴" hidden>
+      <a href="#scanner">검사하기</a>
+      <a href="#intel">조사 DB</a>
+      <a href="#how-it-works">작동 원리</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero section-pad">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="pulse-dot" aria-hidden="true"></span> 브라우저에서 바로 분석 · 입력 내용 외부 전송 없음</div>
+          <h1>수상한 링크와 메시지,<br><span class="gradient-text">먼저 냄새부터 맡아보세요.</span></h1>
+          <p class="hero-lead">ScamScent는 “사기다/아니다”를 단정하지 않습니다. 대신 결제 재촉, 계정 탈취 문구, 개인정보 요구, 단축 URL, 도메인 패턴 같은 <strong>위험 신호를 근거와 함께</strong> 보여줍니다.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#scanner">지금 무료 검사</a>
+            <button class="button button-secondary" id="open-method-modal" type="button">분석 기준 보기</button>
+          </div>
+          <div class="trust-row" aria-label="서비스 특징">
+            <span>✓ 회원가입 없음</span><span>✓ 서버 저장 없음</span><span>✓ 모바일 지원</span>
+          </div>
+        </div>
+
+        <div class="hero-demo" aria-label="검사 결과 예시">
+          <div class="demo-topline">
+            <span class="demo-chip">예시 결과</span>
+            <span class="demo-time">0.6초</span>
+          </div>
+          <div class="risk-summary risk-high">
+            <div>
+              <p class="risk-kicker">위험도</p>
+              <strong>높음</strong>
+            </div>
+            <div class="risk-score"><span>78</span>/100</div>
+          </div>
+          <div class="demo-signal"><span class="severity-dot red"></span><div><strong>결제를 재촉함</strong><p>“오늘 안에 결제하지 않으면 반송”</p></div></div>
+          <div class="demo-signal"><span class="severity-dot red"></span><div><strong>개인정보 입력을 유도함</strong><p>계정·카드 정보 요청 패턴</p></div></div>
+          <div class="demo-signal"><span class="severity-dot amber"></span><div><strong>도메인 확인 필요</strong><p>브랜드명과 실제 등록 도메인을 분리해서 확인</p></div></div>
+          <div class="demo-action"><span aria-hidden="true">→</span><p><strong>추천 행동</strong><br>링크를 누르지 말고 공식 앱이나 홈페이지에서 직접 확인하세요.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="scanner-section section-pad" id="scanner">
+      <div class="container">
+        <div class="section-heading scanner-heading">
+          <div>
+            <span class="section-label">SCAM SIGNAL CHECK</span>
+            <h2>문자·이메일·URL을 붙여넣으세요</h2>
+            <p>URL만 넣어도 되고, 메시지 전체를 붙여넣어도 됩니다. 민감한 개인정보는 가능하면 지우고 검사하세요.</p>
+          </div>
+          <div class="privacy-badge" title="분석은 현재 브라우저에서 수행됩니다.">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V8a5 5 0 0 1 10 0v2M6 10h12v10H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            로컬 분석
+          </div>
+        </div>
+
+        <div class="scanner-layout">
+          <section class="scanner-card" aria-labelledby="input-title">
+            <div class="card-title-row">
+              <div>
+                <p class="card-kicker">INPUT</p>
+                <h3 id="input-title">검사할 내용을 입력하세요</h3>
+              </div>
+              <button class="text-button" id="clear-input" type="button">지우기</button>
+            </div>
+
+            <label class="sr-only" for="scan-input">검사할 문자, 이메일 또는 URL</label>
+            <textarea id="scan-input" rows="10" maxlength="8000" placeholder="예) [배송안내] 주소 오류로 반송 예정입니다. 오늘 안에 아래 링크에서 재배송 수수료를 결제하세요. https://..." spellcheck="false"></textarea>
+            <div class="input-meta">
+              <span id="detected-type">입력 대기 중</span>
+              <span><span id="char-count">0</span>/8,000</span>
+            </div>
+
+            <div class="sample-row" aria-label="예시 불러오기">
+              <span>예시:</span>
+              <button class="sample-chip" data-sample="delivery" type="button">가짜 배송 문자</button>
+              <button class="sample-chip" data-sample="account" type="button">계정 탈취 이메일</button>
+              <button class="sample-chip" data-sample="normal" type="button">일반 안내문</button>
+            </div>
+
+            <div class="save-option">
+              <label class="switch-row" for="save-history">
+                <input id="save-history" type="checkbox" checked />
+                <span class="switch" aria-hidden="true"></span>
+                <span>이 브라우저에 최근 검사 기록 저장</span>
+              </label>
+              <button class="help-button" type="button" data-tooltip="원문 전체는 저장하지 않고, 앞부분 미리보기와 분석 결과만 저장합니다." aria-label="저장 방식 설명">?</button>
+            </div>
+
+            <button class="button button-primary button-large scan-button" id="scan-button" type="button">
+              <span class="button-label">위험 신호 분석</span>
+              <span class="button-spinner" aria-hidden="true"></span>
+            </button>
+            <p class="input-disclaimer">이 도구는 자동 위험 신호 분석기이며 법적·금융적 안전을 보증하지 않습니다.</p>
+          </section>
+
+          <section class="results-card result-empty" id="results-card" aria-live="polite" aria-labelledby="result-title">
+            <div id="result-empty-state" class="empty-state">
+              <div class="empty-icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32"><path d="M8 22c0-8 8-13 17-10-5 2-7 6-5 9 1 4-2 7-6 7-4 0-6-2-6-6Z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M22 8c2-3 5-4 7-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+              <h3 id="result-title">검사 결과가 여기에 표시됩니다</h3>
+              <p>위험도를 숫자 하나로 끝내지 않고, 어떤 신호가 감지됐는지와 왜 중요한지 보여드립니다.</p>
+              <div class="empty-preview">
+                <span></span><span></span><span></span>
+              </div>
+            </div>
+            <div id="result-loading-state" class="loading-state" hidden>
+              <div class="scan-orbit" aria-hidden="true"><span></span></div>
+              <h3>위험 신호를 확인하고 있습니다</h3>
+              <p id="loading-message">문장 패턴을 분석하는 중…</p>
+              <div class="skeleton-lines"><span></span><span></span><span></span></div>
+            </div>
+            <div id="result-content" hidden></div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="intel-section section-pad" id="intel">
+      <div class="container">
+        <div class="section-heading split-heading">
+          <div>
+            <span class="section-label">PRE-RESEARCHED DOMAIN INTEL</span>
+            <h2>이미 조사된 도메인이면 먼저 보여드립니다</h2>
+            <p>입력한 URL의 호스트가 ScamScent의 정적 조사 DB에 있으면, 일반 휴리스틱 분석 전에 알려진 특성과 주의점을 함께 표시합니다.</p>
+          </div>
+          <div class="intel-count"><strong id="intel-count">0</strong><span>등록 레코드</span></div>
+        </div>
+
+        <div class="intel-browser">
+          <div class="intel-search-wrap">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16.5 16.5 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <label class="sr-only" for="intel-search">조사 DB에서 도메인 검색</label>
+            <input id="intel-search" type="search" placeholder="예: bit.ly, github.com" autocomplete="off" />
+          </div>
+          <div class="intel-list" id="intel-list"></div>
+          <div class="intel-note">
+            <strong>중요:</strong> “공식 도메인” 레코드가 있어도 개별 페이지·사용자 콘텐츠·다운로드까지 안전하다는 뜻은 아닙니다. 반대로 DB에 없다고 안전한 것도 아닙니다.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="history-section section-pad" id="history">
+      <div class="container">
+        <div class="section-heading split-heading">
+          <div>
+            <span class="section-label">YOUR RECENT CHECKS</span>
+            <h2>최근 검사 기록</h2>
+            <p>선택한 경우에만 이 브라우저에 저장됩니다. 다른 사람과 공유되거나 서버로 전송되지 않습니다.</p>
+          </div>
+          <button class="button button-ghost" id="clear-history" type="button">기록 전체 삭제</button>
+        </div>
+        <div id="history-list" class="history-list"></div>
+      </div>
+    </section>
+
+    <section class="how-section section-pad" id="how-it-works">
+      <div class="container">
+        <div class="section-heading centered-heading">
+          <span class="section-label">HOW IT WORKS</span>
+          <h2>판정이 아니라 근거를 보여주는 방식</h2>
+          <p>사기는 상황과 맥락에 따라 달라집니다. ScamScent는 사용자가 직접 판단할 수 있도록 구체적인 신호를 분리해서 제시합니다.</p>
+        </div>
+        <div class="steps-grid">
+          <article class="step-card"><span class="step-number">01</span><div class="step-icon">↳</div><h3>입력 유형 감지</h3><p>문장, 이메일, URL을 구분하고 URL이 포함된 경우 호스트를 추출합니다.</p></article>
+          <article class="step-card"><span class="step-number">02</span><div class="step-icon">⌁</div><h3>위험 신호 분석</h3><p>긴급성, 결제, 개인정보 요구, 원격제어, 단축 URL, 도메인 구조 같은 패턴을 점검합니다.</p></article>
+          <article class="step-card"><span class="step-number">03</span><div class="step-icon">◎</div><h3>조사 DB 대조</h3><p>사전에 등록된 도메인이면 알려진 서비스 유형과 주의점을 결과에 함께 표시합니다.</p></article>
+          <article class="step-card"><span class="step-number">04</span><div class="step-icon">→</div><h3>다음 행동 제안</h3><p>링크를 누르지 않기, 공식 앱으로 직접 확인하기, 금융기관에 별도 문의하기 등 실용적인 조치를 안내합니다.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="principles-section section-pad">
+      <div class="container principles-grid">
+        <div>
+          <span class="section-label">DESIGNED FOR CAUTION</span>
+          <h2>“안전합니다”라는 초록불도 신중하게</h2>
+          <p>정상적인 문장처럼 보여도 사기일 수 있고, 낯선 링크라도 합법적인 경우가 있습니다. 그래서 ScamScent는 낮은 위험도에서도 <strong>확정적인 안전 보증을 하지 않습니다.</strong></p>
+        </div>
+        <div class="principle-list">
+          <div><span class="principle-icon">01</span><p><strong>원문은 서버에 저장하지 않음</strong><br>현재 버전은 모든 분석을 브라우저에서 처리합니다.</p></div>
+          <div><span class="principle-icon">02</span><p><strong>근거가 보이는 점수</strong><br>각 신호의 가중치와 감지 이유를 결과 카드에서 확인할 수 있습니다.</p></div>
+          <div><span class="principle-icon">03</span><p><strong>확장 가능한 조사 DB</strong><br>정적 데이터 파일만 갱신해도 새 도메인 기록을 추가할 수 있습니다.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq-section section-pad" id="faq">
+      <div class="container faq-wrap">
+        <div class="section-heading">
+          <span class="section-label">FAQ</span>
+          <h2>자주 묻는 질문</h2>
+        </div>
+        <div class="faq-list">
+          <details><summary>ScamScent가 “사기”라고 확정해 주나요?<span>+</span></summary><p>아니요. 자동 분석은 맥락을 완전히 이해할 수 없기 때문에 “사기 확정”이 아니라 위험 신호와 확인 포인트를 제공합니다.</p></details>
+          <details><summary>입력한 문자나 URL이 서버에 저장되나요?<span>+</span></summary><p>이 버전은 서버 API 없이 브라우저에서 분석합니다. 최근 기록 저장을 켜면 결과 요약과 짧은 미리보기만 현재 브라우저의 LocalStorage에 저장됩니다.</p></details>
+          <details><summary>조사 DB에 없는 도메인은 안전한가요?<span>+</span></summary><p>아닙니다. DB 부재는 안전 신호가 아닙니다. 새 도메인이나 일회성 피싱 도메인은 데이터베이스에 없을 가능성이 높습니다.</p></details>
+          <details><summary>여러 사용자가 많이 검사한 사이트도 보여줄 수 있나요?<span>+</span></summary><p>현재 GitHub Pages 정적 버전은 사용자 간 집계 서버가 없어 전체 사용량을 공유하지 않습니다. 대신 사전 조사 DB와 각 브라우저의 최근 기록을 제공합니다. 추후 Serverless API를 연결하면 익명 집계 기능을 추가할 수 있습니다.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container cta-card">
+        <div><span class="section-label light-label">BEFORE YOU CLICK</span><h2>조금 수상하다면, 먼저 확인하세요.</h2><p>링크를 누르기 전에 10초만 투자하면 불필요한 위험을 줄일 수 있습니다.</p></div>
+        <a href="#scanner" class="button button-light">위험 신호 검사하기</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div><a class="brand footer-brand" href="#top"><span class="brand-mark" aria-hidden="true">⌁</span><span>ScamScent</span></a><p>Smell the scam signals before you click.</p></div>
+      <div class="footer-links"><a href="#scanner">검사하기</a><a href="#intel">조사 DB</a><a href="#faq">FAQ</a><button id="footer-method-button" type="button">분석 기준</button></div>
+      <div class="footer-copy"><p>© <span id="year"></span> ScamScent</p><p>자동 분석 결과는 참고용입니다.</p></div>
+    </div>
+  </footer>
+
+  <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
+
+  <dialog class="method-dialog" id="method-dialog">
+    <form method="dialog" class="dialog-card">
+      <div class="dialog-header"><div><span class="section-label">ANALYSIS METHOD</span><h2>ScamScent 분석 기준</h2></div><button class="icon-button" value="cancel" aria-label="닫기" type="submit">×</button></div>
+      <div class="dialog-body">
+        <p>현재 버전은 키워드·URL 구조·사전 조사 데이터에 기반한 <strong>설명 가능한 휴리스틱 분석</strong>을 사용합니다. 점수는 확률이 아니라 “주의할 신호가 얼마나 겹치는지”를 나타내는 상대적 지표입니다.</p>
+        <div class="method-grid">
+          <div><strong>긴급성·압박</strong><span>즉시, 오늘 안에, 계정 정지, 마지막 경고 등</span></div>
+          <div><strong>금전 요구</strong><span>송금, 수수료, 기프트카드, 코인 결제 등</span></div>
+          <div><strong>민감정보 요구</strong><span>비밀번호, 인증번호, 카드정보, 주민번호 등</span></div>
+          <div><strong>링크 위험 신호</strong><span>단축 URL, IP 주소, 비정상 포트, 과도한 하위 도메인 등</span></div>
+          <div><strong>원격제어 유도</strong><span>AnyDesk, TeamViewer 등 설치 요구</span></div>
+          <div><strong>사전 조사 DB</strong><span>알려진 서비스 특성과 사용상 주의점</span></div>
+        </div>
+        <div class="dialog-warning">URL의 실제 서버 평판, WHOIS, TLS 인증서, 악성코드 여부를 실시간 조회하는 기능은 현재 정적 버전에 포함하지 않았습니다.</div>
+      </div>
+      <div class="dialog-footer"><button class="button button-primary" value="ok" type="submit">확인</button></div>
+    </form>
+  </dialog>
+
+  <noscript><div class="noscript">ScamScent는 브라우저 JavaScript가 필요합니다. JavaScript를 활성화한 뒤 다시 열어주세요.</div></noscript>
+  <script type="module" src="./src/app.js"></script>
+</body>
+</html>
