@@ -317,12 +317,38 @@ try {
         throw "Build completed without dist/index.html."
     }
 
+    # If this ZIP is unpacked into a new folder while the GitHub repository already
+    # exists, the local repository starts with unrelated history. Re-anchor HEAD to
+    # origin/main while leaving the current project files untouched. This preserves
+    # the remote history and turns the current ZIP contents into a normal update
+    # commit instead of requiring a force push.
+    $remoteMainExit = Get-ExternalExitCode "git" @("ls-remote", "--exit-code", "--heads", "origin", "main") -Quiet
+    $remoteMainExists = ($remoteMainExit -eq 0)
+
+    if ($remoteMainExists) {
+        Write-Step "Syncing with the existing GitHub history"
+        Invoke-External "git" @("fetch", "origin", "main")
+
+        $localHeadExists = Test-ExternalSuccess "git" @("rev-parse", "--verify", "HEAD")
+        $canFastForward = $false
+        if ($localHeadExists) {
+            $ancestorExit = Get-ExternalExitCode "git" @("merge-base", "--is-ancestor", "origin/main", "HEAD") -Quiet
+            $canFastForward = ($ancestorExit -eq 0)
+        }
+
+        if (-not $canFastForward) {
+            Write-Host "Existing remote history detected. Keeping the current project files and attaching them to origin/main." -ForegroundColor Yellow
+            Invoke-External "git" @("reset", "--mixed", "origin/main")
+        }
+    }
+
     Write-Step "Committing project files"
     Invoke-External "git" @("add", "-A")
     $diffExit = Get-ExternalExitCode "git" @("diff", "--cached", "--quiet") -Quiet
 
     if ($diffExit -eq 1) {
-        Invoke-External "git" @("commit", "-m", "Initial ScamScent GitHub Pages setup")
+        $commitMessage = if ($remoteMainExists) { "Update ScamScent project" } else { "Initial ScamScent GitHub Pages setup" }
+        Invoke-External "git" @("commit", "-m", $commitMessage)
     }
     elseif ($diffExit -ne 0) {
         throw "Could not inspect staged Git changes."
@@ -332,18 +358,6 @@ try {
     }
 
     Write-Step "Pushing main to GitHub"
-    $remoteMainExit = Get-ExternalExitCode "git" @("ls-remote", "--exit-code", "--heads", "origin", "main") -Quiet
-    $remoteMainExists = ($remoteMainExit -eq 0)
-
-    if ($remoteMainExists) {
-        Invoke-External "git" @("fetch", "origin", "main")
-
-        $ancestorExit = Get-ExternalExitCode "git" @("merge-base", "--is-ancestor", "origin/main", "HEAD") -Quiet
-        if ($ancestorExit -ne 0) {
-            throw "origin/main already has commits that are not in this local project. For safety, this bootstrap will not force-push over them. Use a new/empty repository or merge the remote history first."
-        }
-    }
-
     $pushExit = Get-ExternalExitCode "git" @("push", "-u", "origin", "main")
     if ($pushExit -ne 0) {
         Write-Host "Initial push failed. Refreshing the GitHub workflow scope once, then retrying..." -ForegroundColor Yellow
