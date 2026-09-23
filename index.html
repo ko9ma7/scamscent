@@ -169,7 +169,12 @@
             <p class="input-disclaimer">이 도구는 자동 위험 신호 분석기이며 법적·금융적 안전을 보증하지 않습니다.</p>
           </section>
 
-          <section class="results-card result-empty" id="results-card" aria-live="polite" aria-labelledby="result-title">
+          <section class="results-card result-empty" id="results-card" aria-live="polite" aria-labelledby="result-title" aria-busy="false" tabindex="-1">
+            <div class="result-stage-nav" aria-label="검사 진행 상태">
+              <div class="stage-chip is-active" data-stage-chip="empty"><span>1</span>입력 대기</div>
+              <div class="stage-chip" data-stage-chip="loading"><span>2</span>결과 대기</div>
+              <div class="stage-chip" data-stage-chip="result"><span>3</span>결과 보기</div>
+            </div>
             <div id="result-empty-state" class="empty-state">
               <div class="empty-icon" aria-hidden="true">
                 <svg viewBox="0 0 32 32"><path d="M8 22c0-8 8-13 17-10-5 2-7 6-5 9 1 4-2 7-6 7-4 0-6-2-6-6Z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M22 8c2-3 5-4 7-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>

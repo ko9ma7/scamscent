@@ -16,6 +16,7 @@ const el = {
   loadingState: $('#result-loading-state'),
   loadingMessage: $('#loading-message'),
   resultContent: $('#result-content'),
+  stageChips: $$('[data-stage-chip]'),
   intelSearch: $('#intel-search'),
   intelList: $('#intel-list'),
   intelCount: $('#intel-count'),
@@ -108,6 +109,31 @@ const signalRules = [
 ];
 
 const loadingMessages = ['문장 패턴을 분석하는 중…', 'URL 구조를 확인하는 중…', '사전 조사 DB와 대조하는 중…', '행동 권고를 정리하는 중…'];
+
+function setResultStage(stage) {
+  const valid = new Set(['empty', 'loading', 'result']);
+  const nextStage = valid.has(stage) ? stage : 'empty';
+  el.resultsCard.dataset.stage = nextStage;
+  el.resultsCard.classList.toggle('result-empty', nextStage === 'empty');
+  el.resultsCard.setAttribute('aria-busy', String(nextStage === 'loading'));
+  el.stageChips.forEach(chip => {
+    const active = chip.dataset.stageChip === nextStage;
+    chip.classList.toggle('is-active', active);
+    chip.setAttribute('aria-current', active ? 'step' : 'false');
+  });
+}
+
+function focusResultCard() {
+  el.resultsCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  setTimeout(() => el.resultsCard.focus({ preventScroll: true }), 120);
+}
+
+function announceResultReady() {
+  el.resultsCard.classList.remove('just-completed');
+  void el.resultsCard.offsetWidth;
+  el.resultsCard.classList.add('just-completed');
+  setTimeout(() => el.resultsCard.classList.remove('just-completed'), 1400);
+}
 
 function escapeHtml(value = '') {
   return String(value).replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
@@ -334,7 +360,8 @@ function renderResult(result, options = {}) {
   el.emptyState.hidden = true;
   el.loadingState.hidden = true;
   el.resultContent.hidden = false;
-  el.resultsCard.classList.remove('result-empty');
+  setResultStage('result');
+  announceResultReady();
 
   $('#copy-result')?.addEventListener('click', () => copyResultSummary(result));
   $('#share-result')?.addEventListener('click', () => shareResult(result));
@@ -378,6 +405,8 @@ function showLoading() {
   el.emptyState.hidden = true;
   el.resultContent.hidden = true;
   el.loadingState.hidden = false;
+  setResultStage('loading');
+  focusResultCard();
   el.scanButton.classList.add('is-loading');
   el.scanButton.disabled = true;
   let index = 0;
@@ -484,6 +513,8 @@ async function runScan() {
   el.scanButton.classList.remove('is-loading');
   el.scanButton.disabled = false;
   renderResult(result);
+  focusResultCard();
+  toast('분석 완료', `위험 신호 ${result.signals.length}개를 바탕으로 결과를 표시했습니다.`);
   saveToHistory(text, result);
 }
 
@@ -582,4 +613,5 @@ setupDialog();
 renderIntel();
 renderHistory();
 updateInputMeta();
+setResultStage('empty');
 loadSharedSummary();
